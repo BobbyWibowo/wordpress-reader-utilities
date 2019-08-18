@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WordPress Reader Utilities
 // @namespace    https://fiery.me
-// @version      1.0.0
+// @version      1.0.1
 // @description  Common utilities for readers of WordPress-based sites
 // @author       Bobby Wibowo
 // @run-at       document-end
@@ -99,7 +99,7 @@
     if (!datesKeys.length)
       return log('Current page does not have date meta tags.')
 
-    const selectors = ['header.entry-header', 'h1.entry-title']
+    const selectors = ['header.entry-header', 'h1.entry-title', 'h1.uk-article-title']
     const title = getElement(selectors)
     if (!title.element)
       return log('Current page does not have a title element.')

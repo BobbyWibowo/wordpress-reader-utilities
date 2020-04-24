@@ -40,7 +40,8 @@
         test: element => /^WordPress/.test(element.getAttribute('content'))
       },
       { selector: '#footer .footer-wrap a[href*="wordpress.com"]' },
-      { selector: '#footer2 a[href*="wordpress.org"]' }
+      { selector: '#footer2 a[href*="wordpress.org"]' },
+      { selector: 'footer .site-info a[href*="wordpress.org"]' }
     ]
     const selectors = config.map(conf => conf.selector)
     const detect = getElement(selectors)

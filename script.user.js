@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WordPress Reader Utilities
 // @namespace    https://fiery.me
-// @version      1.0.1
+// @version      1.0.2
 // @description  Common utilities for readers of WordPress-based sites
 // @author       Bobby Wibowo
 // @run-at       document-end

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         WordPress Reader Utilities
-// @namespace    https://fiery.me
-// @version      1.0.2
+// @namespace    https://github.com/BobbyWibowo
+// @version      1.0.3
 // @description  Common utilities for readers of WordPress-based sites
 // @author       Bobby Wibowo
 // @run-at       document-end
@@ -13,9 +13,9 @@
 (function () {
   'use strict'
 
-  // Miscellaneous functions
+  // Helper functions
 
-  const log = (msg, type = 'log') => console[type](`[WRU] ${msg}`)
+  const log = (msg, type = 'log') => console[type]('[WRU] ' + msg)
 
   const getElement = (selectors = []) => {
     let element
@@ -52,6 +52,7 @@
     }
     return false
   }
+
   if (!isWordPress()) return
   log('Current page is a WordPress-based site.')
 
@@ -77,7 +78,7 @@
     hour12: true
   }
 
-  // Date meta tags parser
+  // Add detailed published/modified dates at the top of post.
 
   const getDates = () => {
     const tags = {
@@ -87,7 +88,7 @@
     const results = {}
     const tagsKeys = Object.keys(tags)
     for (const key of tagsKeys) {
-      const meta = document.head.querySelector(`meta[property="${key}"]`)
+      const meta = document.head.querySelector('meta[property="' + key + '"]')
       if (!meta) continue
       results[tags[key]] = new Date(meta.getAttribute('content'))
     }
@@ -113,20 +114,27 @@
 
     for (const key of datesKeys) {
       const formattedDate = new Intl.DateTimeFormat(dateLocale, dateOptions).format(dates[key])
-      datesContainer.innerHTML += `<b>${capitalizeFirstLetter(key)}:</b> ${formattedDate}<br>`
+      datesContainer.innerHTML += '<b>' + capitalizeFirstLetter(key) + ':</b> ' + formattedDate + '<br>'
     }
   }
+
   displayDates()
 
-  // Comments expander/collapser button
+  // Add an expand/collapse button to comments container.
 
   const appendToggler = () => {
-    const selectors = ['.content-comments.container', '.comments-area', '#disqus_thread']
+    const selectors = [
+      '.content-comments.container',
+      '.comments-area',
+      '#disqus_thread',
+      '#fastcomments-widget'
+    ]
+
     const comments = getElement(selectors)
     if (!comments.element)
       return log('Current page does not have a comments section.')
 
-    globalStyle += `${selectors[comments.index]}:not([data-expanded="1"]) { height: 0; overflow: hidden }`
+    globalStyle += selectors[comments.index] + ':not([data-expanded="1"]) { height: 0; overflow: hidden }'
 
     const commentHash = location.hash || ''
     const hasCommentHash = /^#comment(s|-\d+)$/.test(commentHash)
@@ -144,7 +152,7 @@
     toggle.id = 'wcc-toggle'
 
     const updateBtn = () => {
-      toggle.innerHTML = `${comments.element.dataset.expanded ? 'Collapse' : 'Expand'} Comments`
+      toggle.innerHTML = (comments.element.dataset.expanded ? 'Collapse' : 'Expand') + ' Comments'
       return toggle.innerHTML
     }
     updateBtn()

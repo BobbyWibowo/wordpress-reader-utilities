@@ -1,5 +1,7 @@
 # WordPress Reader Utilities
 
+> Migrated to [https://github.com/BobbyWibowo/userscripts](https://github.com/BobbyWibowo/userscripts).
+
 Common utilities for readers of WordPress-based sites.
 
 ## Features
